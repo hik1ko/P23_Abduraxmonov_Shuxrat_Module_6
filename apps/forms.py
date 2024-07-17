@@ -8,4 +8,4 @@ class ProfileForm(ModelForm):
 
     class Meta:
         model = User
-        fields = ('first_name', 'last_name', 'phone_number', 'email')
+        fields = ('first_name', 'name', 'phone_number', 'email')
