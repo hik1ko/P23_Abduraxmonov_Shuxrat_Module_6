@@ -17,7 +17,9 @@
                 </div>
             </div>
             <div class="col-lg-6">
-                <h5>{{ product.name }}</h5><a class="fs--1 mb-2 d-block" href="#!">{{ product.category }}</a>
+                            <img
+                                    src="{{ product.images.first.image.url }}" alt class="img-responsive">
+                <h5>{{ product.name }}</h5><a class="fs--1 mb-2 d-block" href="{% url 'products' %}?category={{ category.slug }}">{{ category.name }}">{{ product.category }}</a>
                 <div class="fs--2 mb-3 d-inline-block text-decoration-none"><span
                         class="fa fa-star text-warning"></span><span class="fa fa-star text-warning"></span><span
                         class="fa fa-star text-warning"></span><span class="fa fa-star text-warning"></span><span

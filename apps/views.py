@@ -2,7 +2,7 @@ import re
 
 from django.contrib.auth import login, authenticate
 from django.shortcuts import render, redirect
-from django.views.generic import TemplateView, ListView, FormView, DetailView
+from django.views.generic import TemplateView, ListView, FormView, DetailView, UpdateView
 
 from apps.forms import ProfileForm
 from apps.models import User, Product, Category
@@ -77,3 +77,19 @@ class ProfileFormView(FormView):
     def form_invalid(self, form):
         data = form.errors
         print(data)
+
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(request.POST, request.FILES, instance=request.user)
+        if form.is_valid():
+            form.save()
+        return redirect('profile')
+
+
+class ProfileUpdateView(UpdateView):
+    model = User
+
+    fields = [
+        'name', 'email', 'phone_number', 'password'
+    ]
+
+    success_url = 'profile'

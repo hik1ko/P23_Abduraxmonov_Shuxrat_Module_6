@@ -41,7 +41,7 @@ INSTALLED_APPS = [
 ]
 
 AUTH_USER_MODEL = 'apps.User'
-LOGOUT_REDIRECT_URL = '/home/'
+LOGOUT_REDIRECT_URL = 'home'
 LOGIN_URL = 'login'
 
 MIDDLEWARE = [

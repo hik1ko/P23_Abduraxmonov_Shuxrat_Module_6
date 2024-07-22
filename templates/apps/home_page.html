@@ -35,190 +35,195 @@
 </head>
 <body>
 {% if request.user.is_authenticated %}
-	<div id="snippetContent">
+    <div id="snippetContent">
     <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
     <script type="text/javascript"
             src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
     <script src="https://netdna.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
     <div class="container bootstrap snippets bootdey">
-    <h6 class="mb-1"><a href="{% url 'products' %}">Products_list</a></h6>
-    <h6 class="mb-1"><a href="{% url 'profile' %}">Profile</a></h6>
+        <h6 class="mb-1"><a href="{% url 'products' %}">Products_list</a></h6>
+        <h6 class="mb-1"><a href="{% url 'profile' %}">Profile</a></h6>
 
-     <form action="{% url 'logout' %}" method="post">
-                                        {% csrf_token %}
-                                        <button class="dropdown-item" type="submit">Logout</button>
-                                    </form>
+        <form action="{% url 'logout' %}" method="post">
+            {% csrf_token %}
+            <button class="dropdown-item" type="submit">Logout</button>
+        </form>
         <div class="row">
             <div class="col-md-3 store-menu">
                 <ul class="nav">
                     {% for category in categories %}
-                    <div class="col-6 col-md-6 col-lg-3 col-xx1-2 mb-4">
-                    <div class="bg-white dark__bg-1100 p-1 h-100"><a href="{% url 'products' %}?category={{ category.slug }}"><img
-                            class="img-thumbnail img-fluid  mb-3 shadow-sm" src="{{ category.image.url }}" alt=""
-                            width="300"></a>
-                        <h6 class="mb-1"><a href="{% url 'products' %}?category={{ category.slug }}">{{ category.name }}</a>
-                        </h6>
-                        <p class="fs--2 mb-1"></p>
-                    </div>
-                </div>
+                        <div class="col-6 col-md-6 col-lg-3 col-xx1-2 mb-4">
+                            <div class="bg-white dark__bg-1100 p-1 h-100"><a
+                                    href="{% url 'products' %}?category={{ category.slug }}"><img
+                                    class="img-thumbnail img-fluid  mb-3 shadow-sm" src="{{ category.image.url }}"
+                                    alt=""
+                                    width="300"></a>
+                                <h6 class="mb-1"><a
+                                        href="{% url 'products' %}?category={{ category.slug }}">{{ category.name }}</a>
+                                </h6>
+                                <p class="fs--2 mb-1"></p>
+                            </div>
+                        </div>
                     {% endfor %}
                 </ul>
             </div>
             <div class="col-md-9">
                 {% for product in products %}
-                	<div class="col-md-6 col-sm-6">
+                    <div class="col-md-6 col-sm-6">
                     <div class="store-item">
-                        <div class="store-item-image"><a href="#"> <img
-                                src="{{ product.images.first.image.url }}" alt class="img-responsive">
+                        <div class="store-item-image"><a href="{% url 'detail' product.slug %}">{{ product.name }}">
+                            <img
+                                    src="{{ product.images.first.image.url }}" alt class="img-responsive">
                         </a></div>
                         <div class="store-item-info clearfix"><span
-                                class="store-item-price themed-color-dark pull-right">$ {{ product.price }}</span> <a href="#"><strong>{{ product.name }}</strong></a><br>
+                                class="store-item-price themed-color-dark pull-right">$ {{ product.price }}</span> <a
+                                href="{% url 'detail' product.slug %}""><strong>{{ product.name }}</strong></a><br>
+                        </div>
                     </div>
-                </div>
                 {% endfor %}
+                </div>
             </div>
         </div>
+        <style type="text/css">body {
+            margin-top: 20px;
+        }
+
+        .store-item {
+            padding: 5px;
+            position: relative;
+            display: block;
+            margin-bottom: 30px;
+            border: 4px solid #eee;
+            -webkit-transition: all .2s ease-out;
+            transition: all .2s ease-out;
+        }
+
+        .store-item:hover {
+            border-color: #ddd;
+            text-decoration: none;
+        }
+
+        .store-item:hover .store-item-image img {
+            -webkit-transform: scale(1.3);
+            transform: scale(1.3);
+        }
+
+        .store-item:hover .store-item-rating {
+            animation-name: fadeInQuick;
+            -webkit-animation-name: fadeInQuick;
+            animation-duration: .5s;
+            -webkit-animation-duration: .5s;
+            animation-timing-function: ease-out;
+            -webkit-animation-timing-function: ease-out;
+            visibility: visible !important;
+            display: block;
+            opacity: 1;
+            background: transparent;
+        }
+
+        .store-item-rating {
+            position: absolute;
+            top: 0;
+            right: 0;
+            left: 0;
+            text-align: center;
+            padding: 10px;
+            opacity: 0;
+            filter: alpha(opacity=0);
+            background-color: #fff;
+            -webkit-transition: all .2s ease-out;
+            transition: all .2s ease-out;
+            z-index: 10;
+        }
+
+        .text-warning,
+        .text-warning:hover,
+        a.text-warning,
+        a.text-warning:focus,
+        a.text-warning:hover {
+            color: #e67e22;
+        }
+
+        .store-item-image {
+            overflow: hidden;
+        }
+
+        .store-item-image img {
+            -webkit-transition: transform .2s ease-out;
+            transition: transform .2s ease-out;
+        }
+
+        .store-item-info {
+            padding: 20px;
+            background-color: #f9f9f9;
+        }
+
+        .themed-color-dark {
+            color: #394263;
+        }
+
+        .store-item-price {
+            font-weight: 700;
+            font-size: 28px;
+        }
+
+        .text-primary, .text-primary:hover, a, a:focus, a:hover {
+            color: #1bbae1;
+            text-decoration: none;
+        }
+
+        .store-menu {
+            margin-top: 30px;
+        }
+
+        .store-menu ul li {
+            border-bottom: 1px solid #f0f4f7;
+        }
+
+        .store-menu ul li:last-child {
+            border-bottom: none;
+        }
+
+        .store-menu ul li a {
+            color: #93a3b5;
+            font-size: 14px;
+            font-weight: 400;
+        }
+
+        .store-menu ul li a i {
+            margin-right: 8px;
+            font-size: 14px;
+        }
+
+        .store-menu ul li a:hover {
+            background-color: #fafcfd;
+            color: #5b9bd1;
+        }
+
+        .store-menu ul li.active {
+            border-bottom: none;
+        }
+
+        .store-menu ul li.active a {
+            color: #5b9bd1;
+            background-color: #f6f9fb;
+            border-left: 2px solid #5b9bd1;
+            margin-left: -2px;
+        }</style>
+        <script type="text/javascript"></script>
     </div>
-    <style type="text/css">body {
-        margin-top: 20px;
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F1RTS0P1CD"></script>
+    <script>window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+        dataLayer.push(arguments);
     }
 
-    .store-item {
-        padding: 5px;
-        position: relative;
-        display: block;
-        margin-bottom: 30px;
-        border: 4px solid #eee;
-        -webkit-transition: all .2s ease-out;
-        transition: all .2s ease-out;
-    }
+    gtag('js', new Date());
 
-    .store-item:hover {
-        border-color: #ddd;
-        text-decoration: none;
-    }
-
-    .store-item:hover .store-item-image img {
-        -webkit-transform: scale(1.3);
-        transform: scale(1.3);
-    }
-
-    .store-item:hover .store-item-rating {
-        animation-name: fadeInQuick;
-        -webkit-animation-name: fadeInQuick;
-        animation-duration: .5s;
-        -webkit-animation-duration: .5s;
-        animation-timing-function: ease-out;
-        -webkit-animation-timing-function: ease-out;
-        visibility: visible !important;
-        display: block;
-        opacity: 1;
-        background: transparent;
-    }
-
-    .store-item-rating {
-        position: absolute;
-        top: 0;
-        right: 0;
-        left: 0;
-        text-align: center;
-        padding: 10px;
-        opacity: 0;
-        filter: alpha(opacity=0);
-        background-color: #fff;
-        -webkit-transition: all .2s ease-out;
-        transition: all .2s ease-out;
-        z-index: 10;
-    }
-
-    .text-warning,
-    .text-warning:hover,
-    a.text-warning,
-    a.text-warning:focus,
-    a.text-warning:hover {
-        color: #e67e22;
-    }
-
-    .store-item-image {
-        overflow: hidden;
-    }
-
-    .store-item-image img {
-        -webkit-transition: transform .2s ease-out;
-        transition: transform .2s ease-out;
-    }
-
-    .store-item-info {
-        padding: 20px;
-        background-color: #f9f9f9;
-    }
-
-    .themed-color-dark {
-        color: #394263;
-    }
-
-    .store-item-price {
-        font-weight: 700;
-        font-size: 28px;
-    }
-
-    .text-primary, .text-primary:hover, a, a:focus, a:hover {
-        color: #1bbae1;
-        text-decoration: none;
-    }
-
-    .store-menu {
-        margin-top: 30px;
-    }
-
-    .store-menu ul li {
-        border-bottom: 1px solid #f0f4f7;
-    }
-
-    .store-menu ul li:last-child {
-        border-bottom: none;
-    }
-
-    .store-menu ul li a {
-        color: #93a3b5;
-        font-size: 14px;
-        font-weight: 400;
-    }
-
-    .store-menu ul li a i {
-        margin-right: 8px;
-        font-size: 14px;
-    }
-
-    .store-menu ul li a:hover {
-        background-color: #fafcfd;
-        color: #5b9bd1;
-    }
-
-    .store-menu ul li.active {
-        border-bottom: none;
-    }
-
-    .store-menu ul li.active a {
-        color: #5b9bd1;
-        background-color: #f6f9fb;
-        border-left: 2px solid #5b9bd1;
-        margin-left: -2px;
-    }</style>
-    <script type="text/javascript"></script>
-</div>
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-F1RTS0P1CD"></script>
-<script>window.dataLayer = window.dataLayer || [];
-
-function gtag() {
-    dataLayer.push(arguments);
-}
-
-gtag('js', new Date());
-
-gtag('config', 'G-F1RTS0P1CD');</script>
-    {% else %}
+    gtag('config', 'G-F1RTS0P1CD');</script>
+{% else %}
     <h1 class="mb-1"><a href="{% url 'login' %}">For using a site please login</a></h1>
 {% endif %}
 
