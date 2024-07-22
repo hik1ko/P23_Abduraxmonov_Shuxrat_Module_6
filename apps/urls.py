@@ -12,6 +12,6 @@ urlpatterns = [
     path('profile', ProfileFormView.as_view(), name='profile'),
     path('home', CategoryListView.as_view(), name='home'),
     path('detail', ProductDetailView.as_view(), name='detail'),
-    path('', LogoutView.as_view(), name='logout'),
+    path('logout', LogoutView.as_view(template_name='apps/login.html'), name='logout'),
 
 ]

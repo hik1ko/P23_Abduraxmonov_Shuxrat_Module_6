@@ -77,3 +77,9 @@ class ProfileFormView(FormView):
     def form_invalid(self, form):
         data = form.errors
         print(data)
+
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(request.POST, request.FILES, instance=request.user)
+        if form.is_valid():
+            form.save()
+        return redirect('profile')
